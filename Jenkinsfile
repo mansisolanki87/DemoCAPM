@@ -17,6 +17,9 @@ pipeline {
     environment {
         MTA_PATH = "${WORKSPACE}"
         MTAR_NAME = "DemoCAPMApp.mtar"
+        CF_API_ENDPOINT = "https://api.cf.us10-001.hana.ondemand.com"
+        CF_ORG = "f86034d7-b0fe-49c7-8c42-3b043a384f18"
+        CF_SPACE = "32802711-1e00-4aee-8ab6-b158273793f8"
     }
 
     stages {
@@ -66,6 +69,17 @@ pipeline {
             }
         }
 
+        stage('Deploy to CF') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'cf', usernameVariable: 'CF_USERNAME', passwordVariable: 'CF_PASSWORD')]) {
+                    sh """
+                        cf login -a ${CF_API_ENDPOINT} -u ${CF_USERNAME} -p ${CF_PASSWORD} -o ${CF_ORG} -s ${CF_SPACE}
+                        cf deploy mta_archives/${MTAR_NAME} -f
+                    """
+                }
+            }
+        }
+        
         stage('Archive Artifact') {
             steps {
                 archiveArtifacts artifacts: "mta_archives/${MTAR_NAME}", fingerprint: true
