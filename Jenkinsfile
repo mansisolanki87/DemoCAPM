@@ -26,18 +26,18 @@ pipeline {
             }
         }
 
-        stage('Install Tools') {
+        stage('Install Dependencies') {
             steps {
-                sh 'mbt --version'
-                sh 'make --version'
+                dir("${MTA_PATH}") {
+                    sh 'npm install'
+                }
             }
         }
 
         stage('Build CAP Artifacts') {
             steps {
                 dir("${MTA_PATH}") {
-                    sh 'npm install'          // install dependencies if needed
-                    sh 'npx cds build'       // generate gen/* folders
+                    sh 'npx cds build'
                 }
             }
         }
@@ -60,18 +60,9 @@ pipeline {
 
         stage('Archive Artifact') {
             steps {
-                archiveArtifacts artifacts: "${MTA_PATH}/mta_archives/${MTAR_NAME}", fingerprint: true
+                archiveArtifacts artifacts: "mta_archives/${MTAR_NAME}", fingerprint: true
             }
         }
-
-        // Optional: deploy to CF (requires cf CLI configured)
-        // stage('Deploy to CF') {
-        //     steps {
-        //         dir("${MTA_PATH}/mta_archives") {
-        //             sh "cf deploy ${MTAR_NAME} -f"
-        //         }
-        //     }
-        // }
     }
 
     post {
