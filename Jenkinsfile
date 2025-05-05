@@ -42,6 +42,14 @@ pipeline {
             }
         }
 
+        stage('Deploy CAP Artifacts') {
+            steps {
+                dir("${MTA_PATH}") {
+                    sh 'npx cds deploy'
+                }
+            }
+        }
+
         stage('Build MTA Project') {
             steps {
                 dir("${MTA_PATH}") {
