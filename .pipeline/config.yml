@@ -16,6 +16,8 @@ general:
 
 ### Step-specific configuration
 steps:
+  npmExecuteScripts:
+    runScripts: []
   mavenExecute:
     dockerImage: devxci/mbtci:1.0.14
 

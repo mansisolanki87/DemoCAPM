@@ -21,7 +21,8 @@
     "start": "cds-serve",
     "undeploy": "cf undeploy DemoCAPMApp --delete-services --delete-service-keys --delete-service-brokers",
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
-    "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "test": "echo \"No tests defined\" && exit 0"
   },
   "cds": {
     "sql": {
