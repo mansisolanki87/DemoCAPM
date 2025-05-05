@@ -33,6 +33,15 @@ pipeline {
             }
         }
 
+        stage('Build CAP Artifacts') {
+            steps {
+                dir("${MTA_PATH}") {
+                    sh 'npm install'          // install dependencies if needed
+                    sh 'npx cds build'       // generate gen/* folders
+                }
+            }
+        }
+
         stage('Build MTA Project') {
             steps {
                 dir("${MTA_PATH}") {
