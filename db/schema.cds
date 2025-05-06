@@ -8,3 +8,7 @@ entity User :managed {
     username:String;
 }
 
+entity Department : managed {
+    key deptid:UUID;
+    departmentname:String;
+}
