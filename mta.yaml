@@ -9,6 +9,7 @@ modules:
   requires:
   - name: DemoCAPMApp-db
   - name: DemoCAPMApp-destination
+  - name: DemoCAPMApp-xsuaa
   provides:
   - name: srv-api
     properties:
@@ -102,6 +103,22 @@ resources:
   parameters:
     service: html5-apps-repo
     service-plan: app-runtime
+- name: DemoCAPMApp-xsuaa
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: xsuaa
+    service-plan: application
+    config:
+      xsappname: DemoCAPMApp-xsapp
+      tenant-mode: dedicated
+      scopes:
+        - name: "$XSAPPNAME.Viewer"
+          description: Viewer
+      role-templates:
+        - name: Viewer
+          description: Viewer role
+          scope-references:
+            - "$XSAPPNAME.Viewer"
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true

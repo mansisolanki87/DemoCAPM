@@ -8,7 +8,6 @@
   "dependencies": {
     "@cap-js/hana": "^1",
     "@sap/cds": "^8",
-    "@sap/xssec": "^4.6.0",
     "express": "^4"
   },
   "devDependencies": {
@@ -26,12 +25,11 @@
     "test": "echo \"No tests defined\" && exit 0"
   },
   "cds": {
-    "sql": {
-      "native_hana_associations": false
-    },
     "requires": {
       "destinations": true,
-      "html5-runtime": true
+      "html5-runtime": true,
+      "auth":"mocked",
+      "db":"hana"
     }
   }
 }
